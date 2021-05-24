@@ -1,6 +1,7 @@
 import 'package:web_scraper/web_scraper.dart';
 
 List<Map<String, dynamic>> movies = List<Map<String, dynamic>>.empty();
+List<String> songs = List<String>.empty();
 final webScraper = WebScraper('http://sweetsoundtrack.com');
 List<Map<String, dynamic>> temp = List<Map<String, dynamic>>.empty();
 void searchMovies(String queryMovie) async {
@@ -29,4 +30,11 @@ void searchMovies(String queryMovie) async {
   }
 
 // TODO: get the implementation from Testing.dart file.
+}
+
+void getSongs(int movieIndex) async {
+  if (await webScraper.loadWebPage(movies[movieIndex]['attributes']['href'])) {
+    songs = webScraper.getElementTitle(
+        "body > div.container > div.content > div > div > div.col-md-8 > dl > span > dt > span > a");
+  }
 }

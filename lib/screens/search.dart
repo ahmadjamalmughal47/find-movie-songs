@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:find_movie_songs/apis/sweetsoundtrack.dart';
+import 'package:find_movie_songs/screens/songs_list.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -11,28 +12,38 @@ class SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: TextField(
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-            color: Colors.black,
+        title: TextField(
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
           ),
+          onSubmitted: (String str) {
+            searchMovies(str);
+          },
         ),
-        onSubmitted: (String str) {
-          searchMovies(str);
-        },
-      )),
-      body: ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (context, index) {
-            return Card(
-                child: ListTile(
-              onTap: () {},
-              title: Text(movies[index]['title']),
-              subtitle: Text("http://sweetsoundtrack.com" +
-                  movies[index]['attributes']['href']),
-            ));
-          }),
+      ),
+      body: Container(
+        child: ListView.builder(
+            itemCount: movies.length,
+            itemBuilder: (context, index) {
+              return Card(
+                  child: ListTile(
+                onTap: () {
+                  getSongs(
+                      index); // selected index, hopefully. This function prepares songs variable in sweetsoundtrack.dart
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Songs()),
+                  );
+                },
+                title: Text(movies[index]['title']),
+                subtitle: Text("http://sweetsoundtrack.com" +
+                    movies[index]['attributes']['href']),
+              ));
+            }),
+      ),
     );
   }
 }

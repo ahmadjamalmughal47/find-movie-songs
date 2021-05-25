@@ -4,7 +4,7 @@ List<Map<String, dynamic>> movies = List<Map<String, dynamic>>.empty();
 List<String> songs = List<String>.empty();
 final webScraper = WebScraper('http://sweetsoundtrack.com');
 List<Map<String, dynamic>> temp = List<Map<String, dynamic>>.empty();
-void searchMovies(String queryMovie) async {
+Future<List<Map<String, dynamic>>> searchMovies(String queryMovie) async {
   // 1. take out first character of queryMovie
   var firstChar = queryMovie[0];
 
@@ -27,8 +27,9 @@ void searchMovies(String queryMovie) async {
 
     movies = temp.sublist(
         1); // it starts from 1, because it, for some reason was always giving an irrelevant first value
-  }
 
+  }
+  return movies;
 // TODO: get the implementation from Testing.dart file.
 }
 
